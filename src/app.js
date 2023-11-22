@@ -82,8 +82,8 @@ function updateTweet(tweetView, tweet, value) {
 const bNewTweet = document.querySelector('#bNewTweet');
 const tweetContainer = document.querySelector('#tweets');
 const tweetsData = [];
-bNewTweet === null || bNewTweet === void 0 ? void 0 : bNewTweet.addEventListener('click', e => {
+bNewTweet.addEventListener('click', e => {
     e.preventDefault();
-    const newTweet = createMainTweet();
-    renderView(newTweet);
+    const newTweetView = createMainTweet();
+    renderView(newTweetView);
 });

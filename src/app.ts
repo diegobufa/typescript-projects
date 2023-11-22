@@ -3,18 +3,20 @@ type Title = string;
 type Id = string;
 
 interface Tweet {
-    id : Id;
+    id : string;
     message: Message
 }
 
 interface TweetView {
-    id: Id;
+    id: string;
     tweets: Tweet[];
 }
 
 function createMainTweet():TweetView {
     const id = crypto.randomUUID() as Id;
     const tweet = createTweet();
+
+    console.log({id});
 
     return {
         id,
@@ -24,16 +26,16 @@ function createMainTweet():TweetView {
 }
 
 function createTweet(): Tweet {
-    const id = crypto.randomUUID();
+    const tweetId = crypto.randomUUID();
     const message = '';
     return {
-        id,
+        id: tweetId,
         message
     };
 }
 
 function renderView(tweetView:TweetView){
-    let view = document.querySelector('#container-' + tweetView.id)
+    let view: HTMLDivElement | null = document.querySelector('#container-' + tweetView.id)
 
     if(view){
         view.innerHTML = "";
@@ -45,13 +47,15 @@ function renderView(tweetView:TweetView){
         document.querySelector('#tweets')?.append(view);
 
 
+    }
+    for( let i = 0; i < tweetView.tweets.length;i++){
+    renderTweet(
+        tweetView,
+        view as HTMLDivElement,
+        tweetView.tweets[i],
+        i === tweetView.tweets.length -1)}
 }
-for( const tweet of tweetView.tweets){
 
-}
-
-
-}
 
 function renderTweet(
     tweetView: TweetView,
@@ -122,6 +126,19 @@ function updateTweet(tweetView: TweetView, tweet: Tweet, value: Message){
     }
 
 }
+
+const bNewTweet = document.querySelector('#bNewTweet')!;
+const tweetContainer = document.querySelector('#tweets');
+const tweetsData: TweetView[] = []
+
+bNewTweet?.addEventListener('click', e =>{
+    e.preventDefault();
+    const newTweet = createMainTweet();
+    renderView(newTweet);
+   
+
+})
+
     
 
 
